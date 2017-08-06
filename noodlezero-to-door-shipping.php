@@ -1,22 +1,20 @@
 <?php
 
 /**
- * Plugin Name: TutsPlus Shipping
- * Plugin URI: http://code.tutsplus.com/tutorials/create-a-custom-shipping-method-for-woocommerce--cms-26098
+ * Plugin Name: NoodleZer To Door Shipping
+ * Plugin URI: https://sk8.tech/
  * Description: Custom Shipping Method for WooCommerce
  * Version: 1.0.0
- * Author: Igor Benić
- * Author URI: http://www.ibenic.com
+ * Author: SK8Tech
+ * Author URI: https://sk8.tech/
  * License: GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Domain Path: /lang
- * Text Domain: tutsplus
+ * Text Domain: sk8tech-to-door-delivery
  */
 
 if (!defined('WPINC')) {
-
 	die;
-
 }
 
 /*
@@ -24,9 +22,9 @@ if (!defined('WPINC')) {
  */
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 
-	function tutsplus_shipping_method() {
-		if (!class_exists('TutsPlus_Shipping_Method')) {
-			class TutsPlus_Shipping_Method extends WC_Shipping_Method {
+	function to_door_shipping_method() {
+		if (!class_exists('To_Door_Shipping_Method')) {
+			class To_Door_Shipping_Method extends WC_Shipping_Method {
 				/**
 				 * Constructor for your shipping class
 				 *
@@ -176,16 +174,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 		}
 	}
 
-	add_action('woocommerce_shipping_init', 'tutsplus_shipping_method');
+	add_action('woocommerce_shipping_init', 'to_door_shipping_method');
 
-	function add_tutsplus_shipping_method($methods) {
-		$methods[] = 'TutsPlus_Shipping_Method';
+	function add_to_door_shipping_method($methods) {
+		$methods[] = 'To_Door_Shipping_Method';
 		return $methods;
 	}
 
-	add_filter('woocommerce_shipping_methods', 'add_tutsplus_shipping_method');
+	add_filter('woocommerce_shipping_methods', 'add_to_door_shipping_method');
 
-	function tutsplus_validate_order($posted) {
+	function to_door_validate_order($posted) {
 
 		$packages = WC()->shipping->get_packages();
 
@@ -201,8 +199,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 				}
 
-				$TutsPlus_Shipping_Method = new TutsPlus_Shipping_Method();
-				$weightLimit = (int) $TutsPlus_Shipping_Method->settings['weight'];
+				$To_Door_Shipping_Method = new To_Door_Shipping_Method();
+				$weightLimit = (int) $To_Door_Shipping_Method->settings['weight'];
 				$weight = 0;
 
 				foreach ($package['contents'] as $item_id => $values) {
@@ -214,7 +212,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 				if ($weight > $weightLimit) {
 
-					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'tutsplus'), $weight, $weightLimit, $TutsPlus_Shipping_Method->title);
+					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'tutsplus'), $weight, $weightLimit, $To_Door_Shipping_Method->title);
 
 					$messageType = "error";
 
@@ -228,6 +226,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 		}
 	}
 
-	add_action('woocommerce_review_order_before_cart_contents', 'tutsplus_validate_order', 10);
-	add_action('woocommerce_after_checkout_validation', 'tutsplus_validate_order', 10);
+	add_action('woocommerce_review_order_before_cart_contents', 'to_door_validate_order', 10);
+	add_action('woocommerce_after_checkout_validation', 'to_door_validate_order', 10);
 }
