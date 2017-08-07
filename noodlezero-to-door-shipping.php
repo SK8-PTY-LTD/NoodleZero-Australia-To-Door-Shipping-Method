@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Plugin Name: NoodleZer To Door Shipping
+ * Plugin Name: NoodleZer To Door Shipping Method
  * Plugin URI: https://sk8.tech/
- * Description: Custom Shipping Method for WooCommerce
+ * Description: To Door Shipping Method for NoodleZero
  * Version: 1.0.0
  * Author: SK8Tech
  * Author URI: https://sk8.tech/
@@ -47,6 +47,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 					$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
 					$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('To Door Shipping', 'noodlezero_to_door');
+					$this->sydzip = isset($this->settings['sydzip']) ? $this->settings['sydzip'] : __('2000', 'noodlezero_to_door');
+					$this->melzip = isset($this->settings['melzip']) ? $this->settings['melzip'] : __('3000', 'noodlezero_to_door');
+					$this->brizip = isset($this->settings['brizip']) ? $this->settings['brizip'] : __('4000', 'noodlezero_to_door');
+
 				}
 
 				/**
@@ -86,11 +90,32 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' => __('To Door Shipping', 'noodlezero_to_door'),
 						),
 
-						'weight' => array(
-							'title' => __('Weight (kg)', 'noodlezero_to_door'),
-							'type' => 'number',
-							'description' => __('Maximum allowed weight', 'noodlezero_to_door'),
-							'default' => 100,
+						// 'weight' => array(
+						// 	'title' => __('Weight (kg)', 'noodlezero_to_door'),
+						// 	'type' => 'number',
+						// 	'description' => __('Maximum allowed weight', 'noodlezero_to_door'),
+						// 	'default' => 100,
+						// ),
+
+						'sydzip' => array(
+							'title' => __('Sydney ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "2000",
+						),
+
+						'melzip' => array(
+							'title' => __('Melbourne ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "3000",
+						),
+
+						'brizip' => array(
+							'title' => __('Brisbane ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "4000",
 						),
 
 					);
@@ -114,57 +139,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						return;
 					}
 
-					foreach ($package['contents'] as $item_id => $values) {
-						$_product = $values['data'];
-						$weight = $weight + $_product->get_weight() * $values['quantity'];
+					/**
+					 * Use Postcode/ZIP to determine if this method applies
+					 * @author Jack
+					 */
+					$postcode = $package["destination"]["postcode"];
+
+					if (strstr($this->sydzip, $postcode) === FALSE && strstr($this->melzip, $postcode) === FALSE && strstr($this->brizip, $postcode) === FALSE) {
+						// The Shipping post code is not found in the pre-configured zip area.
+						// To Door shipping not available
+						return;
 					}
-
-					$weight = wc_get_weight($weight, 'kg');
-
-					if ($weight <= 10) {
-
-						$cost = 0;
-
-					} elseif ($weight <= 30) {
-
-						$cost = 5;
-
-					} elseif ($weight <= 50) {
-
-						$cost = 10;
-
-					} else {
-
-						$cost = 20;
-
-					}
-
-					$countryZones = array(
-						'HR' => 0,
-						'US' => 3,
-						'GB' => 2,
-						'CA' => 3,
-						'ES' => 2,
-						'DE' => 1,
-						'AU' => 1,
-					);
-
-					$zonePrices = array(
-						0 => 10,
-						1 => 30,
-						2 => 50,
-						3 => 70,
-					);
-
-					$zoneFromCountry = $countryZones[$country];
-					$priceFromZone = $zonePrices[$zoneFromCountry];
-
-					$cost += $priceFromZone;
 
 					$rate = array(
 						'id' => $this->id,
 						'label' => $this->title,
-						'cost' => $cost,
+						'cost' => 10,
 					);
 
 					$this->add_rate($rate);
