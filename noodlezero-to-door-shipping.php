@@ -32,10 +32,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				 * @return void
 				 */
 				public function __construct($instance_id = 0) {
-					$this->id = 'tutsplus';
+					$this->id = 'noodlezero_to_door';
 					$this->instance_id = absint($instance_id);
-					$this->method_title = __('TutsPlus Shipping', 'tutsplus');
-					$this->method_description = __('Custom Shipping Method for TutsPlus', 'tutsplus');
+					$this->method_title = __('To Door Shipping', 'noodlezero_to_door');
+					$this->method_description = __('To Door Shipping Method for NoodleZero', 'noodlezero_to_door');
 
 					// Availability & Countries
 					$this->availability = 'including';
@@ -46,7 +46,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$this->init();
 
 					$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
-					$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('TutsPlus Shipping', 'tutsplus');
+					$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('To Door Shipping', 'noodlezero_to_door');
 				}
 
 				/**
@@ -73,23 +73,23 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$this->form_fields = array(
 
 						'enabled' => array(
-							'title' => __('Enable', 'tutsplus'),
+							'title' => __('Enable', 'noodlezero_to_door'),
 							'type' => 'checkbox',
-							'description' => __('Enable this shipping.', 'tutsplus'),
+							'description' => __('Enable this shipping.', 'noodlezero_to_door'),
 							'default' => 'yes',
 						),
 
 						'title' => array(
-							'title' => __('Title', 'tutsplus'),
+							'title' => __('Title', 'noodlezero_to_door'),
 							'type' => 'text',
-							'description' => __('Title to be display on site', 'tutsplus'),
-							'default' => __('TutsPlus Shipping', 'tutsplus'),
+							'description' => __('Title to be display on site', 'noodlezero_to_door'),
+							'default' => __('To Door Shipping', 'noodlezero_to_door'),
 						),
 
 						'weight' => array(
-							'title' => __('Weight (kg)', 'tutsplus'),
+							'title' => __('Weight (kg)', 'noodlezero_to_door'),
 							'type' => 'number',
-							'description' => __('Maximum allowed weight', 'tutsplus'),
+							'description' => __('Maximum allowed weight', 'noodlezero_to_door'),
 							'default' => 100,
 						),
 
@@ -189,11 +189,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 		$chosen_methods = WC()->session->get('chosen_shipping_methods');
 
-		if (is_array($chosen_methods) && in_array('tutsplus', $chosen_methods)) {
+		if (is_array($chosen_methods) && in_array('noodlezero_to_door', $chosen_methods)) {
 
 			foreach ($packages as $i => $package) {
 
-				if ($chosen_methods[$i] != "tutsplus") {
+				if ($chosen_methods[$i] != "noodlezero_to_door") {
 
 					continue;
 
@@ -212,7 +212,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 				if ($weight > $weightLimit) {
 
-					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'tutsplus'), $weight, $weightLimit, $To_Door_Shipping_Method->title);
+					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'noodlezero_to_door'), $weight, $weightLimit, $To_Door_Shipping_Method->title);
 
 					$messageType = "error";
 
