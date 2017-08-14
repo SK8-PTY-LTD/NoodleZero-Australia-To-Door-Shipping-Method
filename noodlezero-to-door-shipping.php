@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: NoodleZer To Door Shipping Method
+ * Plugin Name: NoodleZero To Door Shipping Method
  * Plugin URI: https://sk8.tech/
  * Description: To Door Shipping Method for NoodleZero
  * Version: 1.0.0
