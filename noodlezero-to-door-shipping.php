@@ -47,6 +47,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 					$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
 					$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('To Door Shipping', 'noodlezero_to_door');
+					$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('4000', 'noodlezero_to_door');
 					$this->sydzip = isset($this->settings['sydzip']) ? $this->settings['sydzip'] : __('2000', 'noodlezero_to_door');
 					$this->melzip = isset($this->settings['melzip']) ? $this->settings['melzip'] : __('3000', 'noodlezero_to_door');
 					$this->brizip = isset($this->settings['brizip']) ? $this->settings['brizip'] : __('4000', 'noodlezero_to_door');
@@ -90,12 +91,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' => __('To Door Shipping', 'noodlezero_to_door'),
 						),
 
-						// 'weight' => array(
-						// 	'title' => __('Weight (kg)', 'noodlezero_to_door'),
-						// 	'type' => 'number',
-						// 	'description' => __('Maximum allowed weight', 'noodlezero_to_door'),
-						// 	'default' => 100,
-						// ),
+						'weight' => array(
+							'title' => __('Combo', 'noodlezero_to_door'),
+							'type' => 'number',
+							'description' => __('No. of products to allow free shipping', 'noodlezero_to_door'),
+							'default' => 20,
+						),
 
 						'sydzip' => array(
 							'title' => __('Sydney ZIPs', 'noodlezero_to_door'),
@@ -153,7 +154,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 					$item_count = WC()->cart->get_cart_contents_count();
 
-					if ($item_count >= 20) {
+					if ($item_count >= $this->combo) {
 
 						$rate = array(
 							'id' => $this->id,
