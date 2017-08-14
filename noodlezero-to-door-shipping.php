@@ -91,7 +91,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' => __('To Door Shipping', 'noodlezero_to_door'),
 						),
 
-						'weight' => array(
+						'combo' => array(
 							'title' => __('Combo', 'noodlezero_to_door'),
 							'type' => 'number',
 							'description' => __('No. of products to allow free shipping', 'noodlezero_to_door'),
