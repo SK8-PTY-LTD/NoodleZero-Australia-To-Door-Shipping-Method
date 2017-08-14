@@ -151,13 +151,27 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						return;
 					}
 
-					$rate = array(
-						'id' => $this->id,
-						'label' => $this->title,
-						'cost' => 10,
-					);
+					$item_count = WC()->cart->get_cart_contents_count();
 
-					$this->add_rate($rate);
+					if ($item_count >= 20) {
+
+						$rate = array(
+							'id' => $this->id,
+							'label' => $this->title,
+							'cost' => 0,
+						);
+
+						$this->add_rate($rate);
+					} else {
+
+						$rate = array(
+							'id' => $this->id,
+							'label' => $this->title,
+							'cost' => 10,
+						);
+
+						$this->add_rate($rate);
+					}
 
 				}
 			}
