@@ -132,29 +132,58 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 				 */
 				public function calculate_shipping($package = Array()) {
 
-					$weight = 0;
-					$cost = 0;
-					$country = $package["destination"]["country"];
+                    $weight = 0;
+                    $quantity = 0;
+                    $country = $package["destination"]["country"];
 
-					if ($country != "AU") {
-						return;
-					}
+                    if ($country != "AU") {
+                        return;
+                    }
 
-					/**
-					 * Use Postcode/ZIP to determine if this method applies
-					 * @author Jack
-					 */
-					$postcode = $package["destination"]["postcode"];
+                    /**
+                     * Use Postcode/ZIP to determine if this method applies
+                     * @author Jack
+                     */
+                    $postcode = $package["destination"]["postcode"];
 
-					if (strstr($this->sydzip, $postcode) === FALSE && strstr($this->melzip, $postcode) === FALSE && strstr($this->brizip, $postcode) === FALSE) {
-						// The Shipping post code is not found in the pre-configured zip area.
-						// To Door shipping not available
-						return;
-					}
+                    if (strstr($this->sydzip, $postcode) === FALSE && strstr($this->melzip, $postcode) === FALSE && strstr($this->brizip, $postcode) === FALSE) {
+                        // The Shipping post code is not found in the pre-configured zip area.
+                        // To Door shipping not available
+                        return;
+                    }
 
-					$item_count = WC()->cart->get_cart_contents_count();
+//                echo '<pre> ', print_r($package), '</pre>';
 
-					if ($item_count >= $this->combo) {
+                    foreach ($package['contents'] as $item_id => $values) {
+
+                        //Calculate weight
+                        $_product = $values['data'];
+                        $weight = $weight + $_product->get_weight() * $values['quantity'];
+//                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
+
+                        //Calculate quantity
+                        if ($values['stamp'] != null ) {
+                            //This is a bundled product
+                            foreach ($values['stamp'] as $bundle_item_id => $bundle_item) {
+                                $item_quantity = $bundle_item['quantity'];
+                                $quantity = $quantity + $item_quantity;
+
+//                            echo '<pre> Quantity + ', $item_quantity, '</pre>';
+                            }
+                        } else {
+                            //This is a simple product
+                            $item_quantity = $values['quantity'];
+                            $quantity = $quantity + $item_quantity;
+                        }
+
+//                    echo '<pre> Quantity Total', $quantity, '</pre>';
+                    }
+
+//				echo '<pre> Weight Total Before', $weight, '</pre>';
+                    $weight = wc_get_weight($weight, 'kg');
+//                echo '<pre> Weight Total After', $weight, '</pre>';
+
+					if ($quantity >= $this->combo) {
 
 						$rate = array(
 							'id' => $this->id,
