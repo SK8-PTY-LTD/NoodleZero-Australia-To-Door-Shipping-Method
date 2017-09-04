@@ -144,6 +144,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                      * @author Jack
                      */
                     $postcode = $package["destination"]["postcode"];
+                    $postcode = rtrim($postcode, " ");
 
                     if (strstr($this->sydzip, $postcode) === FALSE && strstr($this->melzip, $postcode) === FALSE && strstr($this->brizip, $postcode) === FALSE) {
                         // The Shipping post code is not found in the pre-configured zip area.
