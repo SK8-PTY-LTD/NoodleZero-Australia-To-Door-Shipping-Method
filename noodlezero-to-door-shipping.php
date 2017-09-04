@@ -164,12 +164,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         //Calculate quantity
                         if ($values['stamp'] != null ) {
                             //This is a bundled product
+                            $bundle_quantity = 0;
                             foreach ($values['stamp'] as $bundle_item_id => $bundle_item) {
                                 $item_quantity = $bundle_item['quantity'];
-                                $quantity = $quantity + $item_quantity;
-
+                                $bundle_quantity = $bundle_quantity + $item_quantity;
 //                            echo '<pre> Quantity + ', $item_quantity, '</pre>';
                             }
+                            $quantity = $quantity + $bundle_quantity * $values['quantity'];
                         } else {
                             //This is a simple product
                             $item_quantity = $values['quantity'];
