@@ -40,16 +40,23 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$this->availability = 'including';
 					$this->countries = array(
 						'AU', // Australia
+						'NZ', // New Zealand
 					);
 
 					$this->init();
-
+					// Australia
 					$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
 					$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('To Door Shipping', 'noodlezero_to_door');
 					$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('4000', 'noodlezero_to_door');
 					$this->sydzip = isset($this->settings['sydzip']) ? $this->settings['sydzip'] : __('2000', 'noodlezero_to_door');
 					$this->melzip = isset($this->settings['melzip']) ? $this->settings['melzip'] : __('3000', 'noodlezero_to_door');
 					$this->brizip = isset($this->settings['brizip']) ? $this->settings['brizip'] : __('4000', 'noodlezero_to_door');
+					// New Zealand
+					$this->nzmiddleearthisland = isset($this->settings['nzmiddleearthisland']) ? $this->settings['nzmiddleearthisland'] : __('4000', 'noodlezero_to_door');
+					$this->nznorthisland = isset($this->settings['nznorthisland']) ? $this->settings['nznorthisland'] : __('4000', 'noodlezero_to_door');
+					$this->nzsouthisland = isset($this->settings['nzsouthisland']) ? $this->settings['nzsouthisland'] : __('4000', 'noodlezero_to_door');
+					$this->nzeastisland = isset($this->settings['nzeastisland']) ? $this->settings['nzeastisland'] : __('4000', 'noodlezero_to_door');
+					$this->nzwestisland = isset($this->settings['nzwestisland']) ? $this->settings['nzwestisland'] : __('4000', 'noodlezero_to_door');
 
 				}
 
@@ -118,6 +125,41 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' => "4000",
 						),
 
+						'nzmiddleearthisland' => array(
+							'title' => __('NZ Middle Earth ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "4000",
+						),
+
+						'nznorthisland' => array(
+							'title' => __('NZ North Island ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "4000",
+						),
+
+						'nzsouthisland' => array(
+							'title' => __('NZ South Island ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "4000",
+						),
+
+						'nzeastisland' => array(
+							'title' => __('NZ East Island ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "4000",
+						),
+
+						'nzwestisland' => array(
+							'title' => __('NZ West Island ZIPs', 'noodlezero_to_door'),
+							'type' => 'text',
+							'description' => __('Use , to seperate', 'noodlezero_to_door'),
+							'default' => "4000",
+						),
+
 					);
 
 				}
@@ -135,7 +177,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$quantity = 0;
 					$country = $package["destination"]["country"];
 
-					if ($country != "AU") {
+					if ($country != "AU" && $country != "NZ") {
 						return;
 					}
 
@@ -146,7 +188,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$postcode = $package["destination"]["postcode"];
 					$postcode = rtrim($postcode, " ");
 
-					if (strstr($this->sydzip, $postcode) === FALSE && strstr($this->melzip, $postcode) === FALSE && strstr($this->brizip, $postcode) === FALSE) {
+					if (strstr($this->sydzip, $postcode) === FALSE &&
+						strstr($this->melzip, $postcode) === FALSE &&
+						strstr($this->brizip, $postcode) === FALSE &&
+						strstr($this->nznorthisland, $postcode) === FALSE &&
+						strstr($this->nznorthisland, $postcode) === FALSE &&
+						strstr($this->nzsouthisland, $postcode) === FALSE &&
+						strstr($this->nzeastisland, $postcode) === FALSE &&
+						strstr($this->nzwestisland, $postcode) === FALSE) {
 						// The Shipping post code is not found in the pre-configured zip area.
 						// To Door shipping not available
 						return;
