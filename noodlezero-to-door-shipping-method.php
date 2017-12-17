@@ -191,11 +191,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if (strstr($this->sydzip, $postcode) === FALSE &&
 						strstr($this->melzip, $postcode) === FALSE &&
 						strstr($this->brizip, $postcode) === FALSE &&
-						strstr($this->nzmiddleearthisland, $postcode) === FALSE &&
+						$country == "AU") {
+						// The Shipping post code is not found in the pre-configured zip area.
+						// To Door shipping not available
+						return;
+					}
+
+					if (strstr($this->nzmiddleearthisland, $postcode) === FALSE &&
 						strstr($this->nznorthisland, $postcode) === FALSE &&
 						strstr($this->nzsouthisland, $postcode) === FALSE &&
 						strstr($this->nzeastisland, $postcode) === FALSE &&
-						strstr($this->nzwestisland, $postcode) === FALSE) {
+						strstr($this->nzwestisland, $postcode) === FALSE &&
+						$country == "NZ") {
 						// The Shipping post code is not found in the pre-configured zip area.
 						// To Door shipping not available
 						return;
