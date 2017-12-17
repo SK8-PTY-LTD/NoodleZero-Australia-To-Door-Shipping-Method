@@ -191,7 +191,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					if (strstr($this->sydzip, $postcode) === FALSE &&
 						strstr($this->melzip, $postcode) === FALSE &&
 						strstr($this->brizip, $postcode) === FALSE &&
-						strstr($this->nznorthisland, $postcode) === FALSE &&
+						strstr($this->nzmiddleearthisland, $postcode) === FALSE &&
 						strstr($this->nznorthisland, $postcode) === FALSE &&
 						strstr($this->nzsouthisland, $postcode) === FALSE &&
 						strstr($this->nzeastisland, $postcode) === FALSE &&
