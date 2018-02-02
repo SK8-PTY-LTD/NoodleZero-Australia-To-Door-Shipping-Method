@@ -40,7 +40,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$this->availability = 'including';
 					$this->countries = array(
 						'AU', // Australia
-						'NZ', // New Zealand
 					);
 
 					$this->init();
