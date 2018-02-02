@@ -43,6 +43,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					);
 					
 					// New Zealand
+					$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
+					$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('To Door Shipping', 'noodlezero_to_door');
+					$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('20', 'noodlezero_to_door');
 					$this->nzmiddleearthisland = isset($this->settings['nzmiddleearthisland']) ? $this->settings['nzmiddleearthisland'] : __('4000', 'noodlezero_to_door');
 					$this->nznorthisland = isset($this->settings['nznorthisland']) ? $this->settings['nznorthisland'] : __('4000', 'noodlezero_to_door');
 					$this->nzsouthisland = isset($this->settings['nzsouthisland']) ? $this->settings['nzsouthisland'] : __('4000', 'noodlezero_to_door');
