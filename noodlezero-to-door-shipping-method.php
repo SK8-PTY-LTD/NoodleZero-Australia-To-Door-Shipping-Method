@@ -151,7 +151,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$quantity = 0;
 					$country = $package["destination"]["country"];
 
-					if ($country != "AU" && $country != "NZ") {
+					if ($country != "AU") {
 						return;
 					}
 
