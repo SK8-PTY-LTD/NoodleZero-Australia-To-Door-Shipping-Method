@@ -53,12 +53,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 					$this->brizip = isset($this->settings['brizip']) ? $this->settings['brizip'] : __('4000', 'noodlezero_to_door');
 					$this->perzip = isset($this->settings['perzip']) ? $this->settings['perzip'] : __('4000', 'noodlezero_to_door');
 					$this->adlzip = isset($this->settings['adlzip']) ? $this->settings['adlzip'] : __('4000', 'noodlezero_to_door');
-					// New Zealand
-					$this->nzmiddleearthisland = isset($this->settings['nzmiddleearthisland']) ? $this->settings['nzmiddleearthisland'] : __('4000', 'noodlezero_to_door');
-					$this->nznorthisland = isset($this->settings['nznorthisland']) ? $this->settings['nznorthisland'] : __('4000', 'noodlezero_to_door');
-					$this->nzsouthisland = isset($this->settings['nzsouthisland']) ? $this->settings['nzsouthisland'] : __('4000', 'noodlezero_to_door');
-					$this->nzeastisland = isset($this->settings['nzeastisland']) ? $this->settings['nzeastisland'] : __('4000', 'noodlezero_to_door');
-					$this->nzwestisland = isset($this->settings['nzwestisland']) ? $this->settings['nzwestisland'] : __('4000', 'noodlezero_to_door');
 
 				}
 
@@ -141,41 +135,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 							'default' => "4000",
 						),
 
-						'nzmiddleearthisland' => array(
-							'title' => __('NZ Middle Earth ZIPs', 'noodlezero_to_door'),
-							'type' => 'text',
-							'description' => __('Use , to seperate', 'noodlezero_to_door'),
-							'default' => "4000",
-						),
-
-						'nznorthisland' => array(
-							'title' => __('NZ North Island ZIPs', 'noodlezero_to_door'),
-							'type' => 'text',
-							'description' => __('Use , to seperate', 'noodlezero_to_door'),
-							'default' => "4000",
-						),
-
-						'nzsouthisland' => array(
-							'title' => __('NZ South Island ZIPs', 'noodlezero_to_door'),
-							'type' => 'text',
-							'description' => __('Use , to seperate', 'noodlezero_to_door'),
-							'default' => "4000",
-						),
-
-						'nzeastisland' => array(
-							'title' => __('NZ East Island ZIPs', 'noodlezero_to_door'),
-							'type' => 'text',
-							'description' => __('Use , to seperate', 'noodlezero_to_door'),
-							'default' => "4000",
-						),
-
-						'nzwestisland' => array(
-							'title' => __('NZ West Island ZIPs', 'noodlezero_to_door'),
-							'type' => 'text',
-							'description' => __('Use , to seperate', 'noodlezero_to_door'),
-							'default' => "4000",
-						),
-
 					);
 
 				}
@@ -210,17 +169,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 						strstr($this->perzip, $postcode) === FALSE &&
 						strstr($this->adlzip, $postcode) === FALSE &&
 						$country == "AU") {
-						// The Shipping post code is not found in the pre-configured zip area.
-						// To Door shipping not available
-						return;
-					}
-
-					if (strstr($this->nzmiddleearthisland, $postcode) === FALSE &&
-						strstr($this->nznorthisland, $postcode) === FALSE &&
-						strstr($this->nzsouthisland, $postcode) === FALSE &&
-						strstr($this->nzeastisland, $postcode) === FALSE &&
-						strstr($this->nzwestisland, $postcode) === FALSE &&
-						$country == "NZ") {
 						// The Shipping post code is not found in the pre-configured zip area.
 						// To Door shipping not available
 						return;
